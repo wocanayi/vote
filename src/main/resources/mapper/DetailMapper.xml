@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtt.dao.DetailDao">
+
+  <select id="list" resultType="com.qtt.vo.Detail">
+    select options.id, theme, seenum, votenum, op, attainvote, rate
+    from qutingting.subjects
+           left join qutingting.options on subjects.id = options.sid
+    where subjects.id = #{id}
+  </select>
+</mapper>

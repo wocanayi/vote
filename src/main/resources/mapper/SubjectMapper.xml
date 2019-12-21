@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtt.dao.SubjectDao">
+    <resultMap id="subjectMap" type="com.qtt.entity.Subject">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="theme" property="theme"/>
+        <result column="votenum" property="votenum"/>
+        <result column="seenum" property="seenum"/>
+        <result column="createtime" property="createtime"/>
+
+    </resultMap>
+
+    <!--<resultMap id="map" type="com.qtt.entity.Subject" extends="subjectMap">
+      <collection property="options" ofType="com.qtt.entity.Options">
+        <id column="id" property="id"/>
+        <result column="attainvote" property="attainvote"/>
+        <result column="op" property="op"/>
+        <result column="rate" property="rate"/>
+      </collection>
+    </resultMap>-->
+    <resultMap id="map" type="com.qtt.entity.Subject" extends="subjectMap">
+        <association property="options" javaType="com.qtt.entity.Options">
+            <id column="id" property="id"/>
+            <result column="attainvote" property="attainvote"/>
+            <result column="op" property="op"/>
+            <result column="rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, theme, votenum, seenum, createtime
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="subjectMap">
+        select theme, seenum, votenum
+        from qutingting.subjects
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="list" resultMap="subjectMap">
+        select
+        <include refid="Base_Column_List"/>
+        from qutingting.subjects
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from qutingting.subjects
+      where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="vote">
+      update qutingting.subjects set votenum = votenum + 1
+      where subjects.id = #{id}
+    </update>
+
+    <insert id="insert" parameterType="com.qtt.entity.Subject" useGeneratedKeys="true" keyProperty="id">
+        insert into qutingting.subjects(id, theme, votenum, seenum, createtime)
+        VALUES (#{id}, #{theme}, #{votenum}, #{seenum}, now())
+    </insert>
+
+    <update id="look" parameterType="com.qtt.entity.Subject">
+        update qutingting.subjects set seenum = seenum + 1 where id = #{id}
+    </update>
+</mapper>
