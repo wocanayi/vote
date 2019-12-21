@@ -8,6 +8,8 @@ import com.qtt.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Project name：qutingting
  * Class name：SubjectController
@@ -36,14 +38,16 @@ public class SubjectController {
     /**
      * 添加主题和选项
      * @param subject
-     * @param options
+     * @param ops
      * @return
      */
     @PostMapping("/vote/insert")
-    public R insert(Subject subject, Options options) {
+    public R insert(Subject subject, @RequestParam(value ="ops")List<String> ops) {
         subjectService.insert(subject);
-        options.setSid(subject.getId());
-        optionService.insert(options);
+        for (String op : ops) {
+            Options options = new Options(subject.getId(), op);
+            optionService.insert(options);
+        }
         return R.Ok();
     }
 

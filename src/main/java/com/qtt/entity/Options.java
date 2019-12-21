@@ -1,5 +1,6 @@
 package com.qtt.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
@@ -19,4 +20,9 @@ public class Options {
     private String op;
     private int attainvote;
     private float rate;
+
+    public Options(int sid, String op) {
+        this.sid = sid;
+        this.op = op;
+    }
 }

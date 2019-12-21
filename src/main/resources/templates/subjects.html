@@ -55,7 +55,7 @@
                 <form class="form-horizontal" role="form" style="padding-top:10px ;" id="form-add">
                 <!--action="${pageContext.request.contextPath}/file/add" method="post"-->
                 <div class="row ">
-                    <div class="col-md-5">
+                    <div class="col-md-5" id="input">
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="form-field-1"> 主题名称:</label>
                             <div class="col-sm-9">
@@ -64,30 +64,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="form-field-2"> 选项1:</label>
+                            <label class="col-sm-3 control-label" for="form-field-2"> 选项:</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="op" id="form-field-2"
+                                <input type="text" class="form-control" name="ops" id="form-field-2"
                                        placeholder="选项"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="form-field-3"> 选项2:</label>
+                            <label class="col-sm-3 control-label" for="form-field-3"> 选项:</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="op" id="form-field-3"
+                                <input type="text" class="form-control" name="ops" id="form-field-3"
                                        placeholder="选项"/>
                             </div>
                         </div>
-                        <!--<div class="form-group">
-                            <label class="col-sm-3 control-label" for="form-field-4"> 创建时间:</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" name="uploadTime" id="form-field-4"
-                                       placeholder="创建时间"/>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">添加选项</button>
+                    <button type="button" class="btn btn-default" id="append">添加选项</button>
+                    <!--data-dismiss="modal"-->
                     <button type="submit" class="btn btn-default" onclick="add()">提交</button>
                 </div>
                 </form>
@@ -97,6 +91,19 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $("#append").click(function (e) {
+            $("#input").append('<div class="form-group">\n' +
+                '                            <label class="col-sm-3 control-label" for="form-field-3"> 选项:</label>\n' +
+                '                            <div class="col-sm-9">\n' +
+                '                                <input type="text" class="form-control" name="ops" id="form-field-3"\n' +
+                '                                       placeholder="选项"/>\n' +
+                '                            </div>\n' +
+                '                        </div>');
+        });
+    });
+
+
 function add() {
     $.ajax({
         url:"/vote/insert",
